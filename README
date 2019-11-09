@@ -1,0 +1,143 @@
+               d i s c o
+The Passive IP DISCOvery and fingerprinting tool
+
+(c) Copyright 2003 - Preston Wood <p@altmode.com>
+
+
+Description
+-----------
+
+  Disco is a passive IP discovery and fingerprinting utility designed
+  to sit on segments distributed throughout a network to uniquely discover IP's
+  on the network.  In addition to IP discovery disco has the ability
+  to passively fingerprint IP SYN packets using techniques detailed
+  in a white paper from Lance Spitzner (see special thanks for
+  location).  The intention is for disco to discover IP's on the
+  network, fingerprint the packet if necessary, and load into the
+  Gherkin database for targeted host scans.
+
+  Disco was originally started as a passive discovery tool for Gherkin
+  the scan manager program (see www.altmode.com/gherkin).
+  However, throughout writing the program
+  it was apparent that the tool could be used as a standalone
+  discovery utility as well.
+
+  v1.2 has been released for standalone use, STILL working on
+  Gherkin intetegration.
+
+
+Special Thanks
+--------------
+
+  * Lance Spitzner and his passive fingerprinting white paper at:
+    http://project.honeynet.org/papers/finger/
+
+  * Michal Zalewski and William Stearns and their excellent p0f
+    passive fingerprinting utility and list of fingerprinted OS's
+
+  * Mike Schiffman and all his excellent open source network utilities
+
+  * Mike Schmuhl for feedback, debugging, and with distribution package
+
+  * Josh Glover for some new functionality (INCOGEN, Inc)
+
+  * Alerto Ornaghi (ALoR) and Marco Valleri (NaGA) of ettercap for new fingerprints 
+
+Platforms
+---------
+Tested on Redhat and SuSE.  However it should compile on most any UNIX platform with libpcap installed.  Let me know if you get this working on other platforms.
+
+Using Disco
+-----------
+
+  Once compiled launching disco -h will list the options available:
+
+  default operation will capture packets from defined device listening
+  for only IP packets and recording uniquely identified source IP addresses
+  Outputing the IPs and associated fingerprints (if selected) to STDOUT
+
+  -i device -- this option specifies the ethernet device to start
+   capturing packets, this option is required
+
+  -N do not print IP -- this option suppresses printing the IP and associated
+   fingerprint info to STDOUT
+
+  -f fingerprint -- option fingerprints the IP SYN packet - see listed
+   format below
+
+  -S SYN only -- only record IP SYN packets, useful when used with
+   fingerprint option because it will not record source IP addresses
+   where fingerprinting could not occur
+
+  -A SYNACK -- ability to fingerprint SYNACK packets
+
+  -s Input file -- Parse packets from a previously captured TCPDUMP file verses   live data capture
+
+  -o file -- write output to a file, simple as that
+
+  -r filter rule -- define TCPDUMP tyle rules, see TCPDUMP man page
+   for filtering options.
+     Ex:  disco -i eth0 -r "ip src net 10.0.0.0/8"
+   When using the -r option you must include ip in the
+   rule with v1.0, planning on fixing with next release.  Use this
+   option to filter on IP's you expect to see on the segment rather
+   than no rule and seeing all source IP's even if they are not on
+   the network segment
+
+  -u unique ip -- must be used with fingerprint option, will force
+   only fingerprinting IP SYN packets or SYNACK packets that are unique since disco
+   started.  This option is useful from a discovery perspective to
+   only record IP SYN/SYNACK packets that are unique, without this option
+   disco will fingerprint EVERY IP SYN/SYNACK packet it sees.
+
+  -h help -- display options available
+
+  -g enable gherkin -- output discovered IP's and fingerprinted hosts
+   to the Gherkin database.  THIS OPTION IS NOT YET ENABLED
+
+  -p pipeargs -- pipe output to a program (see README.pipe for more info)
+
+  -P pipeargs with string -- string to print before output when using -p (see README.pipe for more info
+
+  -t timestamp -- adds a system timestamp to the outfile file (-o option)
+
+  -v verbose -- output full fingerprint info to output file (-o option) including number of NOPS and relative location of SACKOK and NOP options
+
+  -e ethmode -- for running on some devices without IP addresses assigned, if an error is displayed regarding "pcap_lookupnet () failed" try this option
+
+
+When disco cannot determine the host OS from the fingerprint it will
+display the fingerprint so you can check the host and note the host
+fingerprint in the disco.fp fingerprint file.
+
+Ex: 10.1.1.1: 16384:255:1460:1:0:0:1:44:S
+
+Disco 1.2 fingerprint format:
+
+wwwww:ttt:mmmm:D:W:S:N:I:PT
+
+wwww - window size
+ttt  - time to live
+mmmm - maximum segment size
+D    - do not fragment flag (0=notset, 1=set)
+W    - window scaling (-1=notpresent)
+S    - sackOK flag (0=notset, 1=set)
+N    - nop flag (o=notset, 1=set)
+I    - packet size (-1=irrelevant)
+PT   - packet type (S for SYN, A for SYNACK) 
+
+When determining host - fingerprint be aware of the TTL field, you
+will need to determine the original TTL which is usually equal to the
+first power of 2 greater than the TTL you are seeing.
+
+
+To Do
+-----
+
+  * Enable Gherkin database output support
+  * Enable command line daemon mode
+  * Continue updating fingerprint list
+  * Fixing found bugs!
+
+  Please send an email to p@altmode.com for questions and or comments
+  for enhancements.

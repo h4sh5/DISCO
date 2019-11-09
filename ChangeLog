@@ -1,0 +1,16 @@
+v1.2		- New Features (07.04.2003)
+		  - Option to fingerprint SYNACK packets
+		  - Option to output more verbose fingerprint information to output file
+		  - Added a ton of new fingerprints - 267 new SYN fps and 727 new SYNACK fps (much thanks to ettercap guys - ALoR and NaGA) totaling 1214 fingerprints
+v1.1		- New Features (06.06.2003)
+		  - Option to parse a previously saved TCPDUMP file through DISCO (Preston)
+		  - Option to add a system timestamp to output file (Preston)
+		  - Option to pipe output to another program (INCOGEN, Inc - Josh Glover jmglov@incogen.com)
+disco.fp	- Added a number of new fingerprints and corrected a few host descriptions (Preston - 05.07.2003)
+v1.0bsd 	- BSD port (Preston - 5.03.2003) 
+		  - Included header for n_long define
+		  - Put tcphdr struct in disco.h rather than system tcp.h
+		  - Put iphdr struct in disco.h rather than system ip.h
+		  - Tested on FreeBSD 4.4 and OpenBSD 2.9
+
+v1.0 		- Initial Release (Preston - 04.30.2003)

@@ -1,0 +1,34 @@
+This file documents the -p and -P options to DISCO
+--------------------------------------------------
+
+It is possible to have DISCO report the hosts it discovers to standard out,
+a file, or via another program, e.g. sendmail. To accomplish the latter, you
+should make use of the -p option. -p requires an argument, which is a string
+of arguments to the program, the first argument being the name of the program
+itself (think of it as argv--argv[0] is the name of the program, and argv[1]
+and up are the arguments). -P can be used to write a string to the pipe
+before the normal DISCO output.
+
+For example, to have DISCO report new hosts via email:
+
+disco -i eth0 -p '/usr/sbin/sendmail -oi -t' \
+-P "`echo -e 'To: admin@domain.com\nSubject: DISCO\n\nNew host: '`"
+
+<admin@domain.com> will receive an email every time a new host is discovered.
+
+A cleaner way of dealing with the -P flag for email is to make a text file to
+serve as a template for the email:
+
+
+-------------------------------------------------------------------------------
+From: DISCO <disco@domain.com>
+To: Administrator <admin@domain.com>
+Subject: New Host Detected by DISCO
+
+DISCO detected a new host:
+
+-------------------------------------------------------------------------------
+
+And then invoke DISCO like this:
+
+disco -i eth0 -p 'sendmail -oi -t' -P "`cat file.txt`"
