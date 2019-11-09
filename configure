@@ -1238,6 +1238,8 @@ echo "$as_me: error: run \`make distclean' and/or \`rm $cache_file' and start ov
    { (exit 1); exit 1; }; }
 fi
 
+CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=1 -Wno-comment"
+
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'

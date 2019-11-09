@@ -492,7 +492,7 @@ s,@INSTALL_STRIP_PROGRAM@,${SHELL} $(install_sh) -c -s,;t t
 s,@AWK@,awk,;t t
 s,@SET_MAKE@,,;t t
 s,@CC@,gcc,;t t
-s,@CFLAGS@,-g -O2 -w,;t t
+s,@CFLAGS@, -D_FORTIFY_SOURCE=1 -Wno-comment,;t t
 s,@LDFLAGS@,,;t t
 s,@CPPFLAGS@,,;t t
 s,@ac_ct_CC@,gcc,;t t

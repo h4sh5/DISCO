@@ -47,8 +47,8 @@
 #define PROMISC         1
 #define TIMEOUT         500
 #define FILTER          "ip"
-#define SYNCHAR		"S"
-#define SYNACKCHAR	"A"
+#define SYNCHAR		'S'
+#define SYNACKCHAR	'A'
 #define HASH_TABLE_SIZE 19999
 #define MAXFP           5000
 
@@ -108,7 +108,7 @@ struct fingerprints
     u_int16_t sackok;
     u_int8_t  nop;
     u_int16_t psize;
-    char      packet_type[1]; //SYN or SYNACK (S or A)
+    char      packet_type; //SYN or SYNACK (S or A)
     char      *os;
 };
 
@@ -174,7 +174,7 @@ struct tcphdr
 
 char *iprintf(u_char *);
 int packet_to_check(uint32_t, struct table_entry **);
-char fingerprint_packet(u_char *);
+void fingerprint_packet(u_char *);
 int load_fingerprints();
 int packet_dup_check(uint32_t, struct table_entry **, uint32_t);
 int packet_add_entry(uint32_t, struct table_entry **, uint32_t);

@@ -45,7 +45,7 @@ AUTOMAKE = automake-1.7
 AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2 -w
+CFLAGS =  -D_FORTIFY_SOURCE=1 -Wno-comment
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo

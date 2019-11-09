@@ -36,11 +36,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "./disco.h"
+#include <execinfo.h>
+
 /* disco.c */
 
 int loop = 1;
 u_long ip = 0;
-int synack=0,verbose=0,fp_cand=0,found=0,unique_ip=0,totpacket_fp=0,totfp=0,ack=0,fingerprint=0,allip=0;
+int synack=0,verbose=0,fp_cand=0,found=0,unique_ip=0,totpacket_fp=0,
+    totfp=0,ack=0,fingerprint=0,allip=0,tot_os_found=0;
 char found_os[255];
 char optstr[60]="";
 uint32_t srcip;
@@ -53,10 +56,20 @@ struct iphdr *ip_h;
 struct tcphdr *tcp_h;
 
 
+void
+segfault_handler(int signo)
+{
+    void* callstack[128];
+    fprintf(stderr, "caught segfault\n");
+    backtrace_symbols_fd(callstack, 128, STDERR_FILENO);
+    exit(-1);
+}
+
+
 int main(int argc, char **argv)
 {
     int c=0;         
-    int totfp=0;
+    // int totfp=0;
     pcap_t *p;
     char *device = NULL, *rule = NULL;
     char *foundip;
@@ -99,6 +112,8 @@ int main(int argc, char **argv)
 			break;
 		     case 'f':
                         totfp = load_fingerprints();
+                        if (totfp == -1) //file not found
+                            exit(1);
                         fingerprint = 1;
                         break;
                      case 'N':
@@ -248,8 +263,29 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
+    if (catch_sig(SIGSEGV, segfault_handler) == -1)
+    {
+        fprintf(stderr, "Can't catch the segfault\n");
+        pcap_close(p);
+        exit(EXIT_FAILURE);
+    }
+
+    if (catch_sig(SIGABRT, segfault_handler) == -1)
+    {
+        fprintf(stderr, "Can't catch the sigabrt\n");
+        pcap_close(p);
+        exit(EXIT_FAILURE);
+    }
+
     ht_init_table(ihash_table);
-    outfile = fopen(logfile,"w");
+    if (logfile != NULL) {
+        fprintf(stderr, "opening %s as logfile..\n", logfile);
+        outfile = fopen(logfile,"w");
+    } else {
+        fprintf(stderr, "logging to stdout\n");
+        outfile = stdout;
+    }
+    
 
     /* Start looping through packets ctrl-c to exit */
 
@@ -304,9 +340,9 @@ int main(int argc, char **argv)
             }
         }
 
-        if ( unique_ip==1 && only_syn == 1) // If fingerprint flag and unique flag is set
+        if ( unique_ip==1 && fingerprint == 1) // If fingerprint flag and unique flag is set
         {
-          if (ip_h->protocol==6)
+          if (ip_h->protocol==6 || ip_h->protocol==4)
           {
             switch (ip_h->ihl)
             {
@@ -385,7 +421,7 @@ int main(int argc, char **argv)
                         }
                         if ( print_ip == 1 )
                         {
-                            printf("%s: %d:%d:%d:%d:%d:%d:%d:%d:%s\n",foundip,packet_fp.win, packet_fp.ttl, packet_fp.mss, packet_fp.df, packet_fp.wscale, packet_fp.sackok, packet_fp.nop, packet_fp.psize, packet_fp.packet_type);
+                            printf("%s: %d:%d:%d:%d:%d:%d:%d:%d:%c\n",foundip,packet_fp.win, packet_fp.ttl, packet_fp.mss, packet_fp.df, packet_fp.wscale, packet_fp.sackok, packet_fp.nop, packet_fp.psize, packet_fp.packet_type);
                         }
                         totpacket_fp++;
                     }
@@ -398,9 +434,9 @@ int main(int argc, char **argv)
             }
           }
         }
-        else if ( unique_ip==0 && only_syn == 1) //If fingerprint flag is set and unique flag is not
+        else if ( unique_ip==0 && fingerprint == 1) //only_syn == 1) //If fingerprint flag is set and unique flag is not
         {
-            if (ip_h->protocol==6)
+            if (ip_h->protocol==6 || ip_h->protocol==4)
             {
                 switch (ip_h->ihl)
                 {
@@ -475,7 +511,7 @@ fprintf(outfile,"%s,%s,%d:%d:%d:%d:%d:%d:%d:%d,S,%s\n",timestamp,foundip,packet_
                         }
                         if ( print_ip == 1 )
                         {
-                            printf("%s: %d:%d:%d:%d:%d:%d:%d:%d:%s\n",foundip,packet_fp.win, packet_fp.ttl, packet_fp.mss, packet_fp.df, packet_fp.wscale, packet_fp.sackok, packet_fp.nop, packet_fp.psize, packet_fp.packet_type);
+                            printf("%s: %d:%d:%d:%d:%d:%d:%d:%d:%c\n",foundip,packet_fp.win, packet_fp.ttl, packet_fp.mss, packet_fp.df, packet_fp.wscale, packet_fp.sackok, packet_fp.nop, packet_fp.psize, packet_fp.packet_type);
                         }
                         totpacket_fp++;
                     }
@@ -490,7 +526,7 @@ fprintf(outfile,"%s,%s,%d:%d:%d:%d:%d:%d:%d:%d,S,%s\n",timestamp,foundip,packet_
 
 	if ( unique_ip==1 && ack==1) // If fingerprint flag and unique flag is set
         {
-          if (ip_h->protocol==6)
+          if (ip_h->protocol==6 || ip_h->protocol==4)
           {
             switch (ip_h->ihl)
             {
@@ -568,7 +604,7 @@ fprintf(outfile,"%s,%s,%d:%d:%d:%d:%d:%d:%d:%d,S,%s\n",timestamp,foundip,packet_
                         }
                         if ( print_ip == 1 )
                         {
-                            printf("%s: %d:%d:%d:%d:%d:%d:%d:%d:%s\n",foundip,packet_fp.win, packet_fp.ttl, packet_fp.mss, packet_fp.df, packet_fp.wscale, packet_fp.sackok, packet_fp.nop, packet_fp.psize, packet_fp.packet_type);
+                            printf("%s: %d:%d:%d:%d:%d:%d:%d:%d:%c\n",foundip,packet_fp.win, packet_fp.ttl, packet_fp.mss, packet_fp.df, packet_fp.wscale, packet_fp.sackok, packet_fp.nop, packet_fp.psize, packet_fp.packet_type);
                         }
                         totpacket_fp++;
                     }
@@ -583,7 +619,7 @@ fprintf(outfile,"%s,%s,%d:%d:%d:%d:%d:%d:%d:%d,S,%s\n",timestamp,foundip,packet_
         }
         else if ( unique_ip==0 && ack==1) //If fingerprint flag is set and unique flag is not
         {
-            if (ip_h->protocol==6)
+            if (ip_h->protocol==6 || ip_h->protocol==4)
             {
                 switch (ip_h->ihl)
                 {
@@ -658,7 +694,7 @@ fprintf(outfile,"%s,%s,%d:%d:%d:%d:%d:%d:%d:%d,A,%s\n",timestamp,foundip,packet_
                         }
                         if ( print_ip == 1 )
                         {
-                            printf("%s: %d:%d:%d:%d:%d:%d:%d:%d:%s\n",foundip,packet_fp.win, packet_fp.ttl, packet_fp.mss, packet_fp.df, packet_fp.wscale, packet_fp.sackok, packet_fp.nop, packet_fp.psize, packet_fp.packet_type);
+                            printf("%s: %d:%d:%d:%d:%d:%d:%d:%d:%c\n",foundip,packet_fp.win, packet_fp.ttl, packet_fp.mss, packet_fp.df, packet_fp.wscale, packet_fp.sackok, packet_fp.nop, packet_fp.psize, packet_fp.packet_type);
                         }
                         totpacket_fp++;
                     }
@@ -690,6 +726,7 @@ fprintf(outfile,"%s,%s,%d:%d:%d:%d:%d:%d:%d:%d,A,%s\n",timestamp,foundip,packet_
                  "Unique IP addresses received by Disco:\t%6ld\n",
                  ps.ps_recv, ps.ps_drop, ip);
         printf("Total IP fingerprinted by Disco: \t%6d\n", totpacket_fp);
+        printf("Total OS found:\t%6d\n", tot_os_found);
     }
     pcap_close(p);
     return (EXIT_SUCCESS);
@@ -801,11 +838,12 @@ int packet_add_entry(uint32_t src_ip, struct table_entry **hash_table, uint32_t 
 
 /* Routine to fingerprint the SYN packet */
 
-char fingerprint_packet(u_char *packet)
+void fingerprint_packet(u_char *packet)
 {
+    fprintf(stderr, "fingerprint_packet\n");
     int i=0,j=0;
     int testi=0;
-    char teststr[6];
+    char teststr[500];
     int count=0;
     int opt=0;
     int fullopt=0;
@@ -818,6 +856,8 @@ char fingerprint_packet(u_char *packet)
     struct iphdr *ip_h;
     struct tcphdr *tcp_h;
     struct ethhdr *ether;
+
+    int hasFoundOS = 0;
 
     void* opt_ptr;
 
@@ -854,12 +894,12 @@ char fingerprint_packet(u_char *packet)
 		if ( synack == 0 )
 		{
 //		  packet_fp.packet_type = (char) malloc(strlen (SYNCHAR)+1);
-		  strcpy (packet_fp.packet_type, SYNCHAR);
+		  packet_fp.packet_type = SYNCHAR;
 		}
 		if ( synack == 1 )
 		{
 //		  packet_fp.packet_type = (char) malloc(strlen (SYNACKCHAR)+1);
-		  strcpy (packet_fp.packet_type, SYNACKCHAR);
+		  packet_fp.packet_type = SYNACKCHAR;
 		}
                 opt_ptr=(void*)tcp_h+sizeof(struct tcphdr);
                 optlen = (ntohs(ip_h->tot_len))-(sizeof(struct iphdr))-(sizeof(struct tcphdr));
@@ -942,7 +982,7 @@ char fingerprint_packet(u_char *packet)
 			strcat(optstr, teststr);
 			strcat(optstr, "|");
 		}
-                while ( count < totfp  && found==0 )
+                while ( count < totfp  && hasFoundOS==0 )
                 {
 //		  packettype_cmp = strcmp(loadedfp[count].packet_type, packet_fp.packet_type);
                   if (loadedfp[count].win == packet_fp.win &&
@@ -952,17 +992,19 @@ char fingerprint_packet(u_char *packet)
                       loadedfp[count].sackok == packet_fp.sackok &&
                       loadedfp[count].nop == packet_fp.nop &&
                       loadedfp[count].psize == packet_fp.psize &&
-		      (strcmp(loadedfp[count].packet_type, packet_fp.packet_type)) == 0)
+		      (loadedfp[count].packet_type == packet_fp.packet_type))
                   {
                       for ( ttlcount=0;ttlcount<64;ttlcount++ )
                       {
                           if (loadedfp[count].ttl == ((packet_fp.ttl)+ttlcount))
                           {
-                              strcpy (found_os, loadedfp[count].os);
-                              found = 1;
+                              strncpy (found_os, loadedfp[count].os, sizeof(found_os)/sizeof(char));
+                              printf("found OS: %s\n", loadedfp[count].os);
+                              hasFoundOS = 1;
+                              tot_os_found++;
                               count = totfp;
                           }
-                          if ( found==1 )
+                          if ( hasFoundOS==1 )
                           {
                               break
                               ;
@@ -977,12 +1019,18 @@ char fingerprint_packet(u_char *packet)
 			strcat(optstr, "TTL-");
 			strcat(optstr, teststr);
 		}
-                count=0;
-                if ( tcp_h->ack == 1 )
-                {
-                  synack=1;
-                }
+        count=0;
+        if ( tcp_h->ack == 1 )
+        {
+          synack=1;
+        }
+        if (hasFoundOS) {
+            printf("%s: %s\n", optstr, found_os);
+        }
+        
+
 }
+
 
 void cleanup(int signo)
 {
@@ -1022,7 +1070,7 @@ int load_fingerprints()
 {
     char *fp;
     char *line;
-    char infile[200];
+    char infile[1500];
     FILE *fp_file;
 	int len=0;
 
@@ -1031,7 +1079,7 @@ int load_fingerprints()
     if (!fp_file)
     {
         fprintf(stderr, "No fingerprint file found\n");
-        exit(1);
+        return -1;
     }
 
     while (fgets(infile, 1500, fp_file) != NULL && infile[0] != '\n')
@@ -1055,14 +1103,17 @@ int load_fingerprints()
         fp = strtok ( NULL, ":");
         loadedfp[totfp].psize = atoi(fp);
         fp = strtok ( NULL, ":");
-//	loadedfp[totfp].packet_type = (char) malloc(strlen (fp)+1);
-	strcpy (loadedfp[totfp].packet_type, fp);
-	fp = strtok ( NULL, ":");
+        //	loadedfp[totfp].packet_type = (char) malloc(strlen (fp)+1);
+        //packet_type is just 1 byte
+        loadedfp[totfp].packet_type = fp[0];
+	    // strncpy (loadedfp[totfp].packet_type, fp, 1);
+	    fp = strtok ( NULL, ":");
         loadedfp[totfp].os =  (char *) malloc(strlen (fp)+1);
         strcpy (loadedfp[totfp].os, fp);
         totfp++;
     }
     fclose(fp_file);
+    fprintf(stderr, "loaded %d fingerprints\n", totfp);
     return(totfp);
 }
 
@@ -1098,7 +1149,7 @@ void usage(char *errmsg)
 
 int parse(char *buf, char **args)
 {
-    while (*buf != NULL)
+    while (*buf != 0)
     {
         // Convert whitespace to nulls, so that the previous argument is
         // terminated automatically
@@ -1109,7 +1160,7 @@ int parse(char *buf, char **args)
         *args++ = buf;
 
         // Skip over the argument
-        while ((*buf != NULL) && (*buf != ' ') && (*buf != '\t'))
+        while ((*buf != 0) && (*buf != ' ') && (*buf != '\t'))
             buf++;
 
     } // while (processing string)

@@ -30,8 +30,8 @@ Kernel configured for up to 4 processors.
 Processor type: x86_64h (Intel x86-64h Haswell)
 Processors active: 0 1 2 3
 Primary memory available: 8.00 gigabytes
-Default processor set: 328 tasks, 1599 threads, 4 processors
-Load average: 3.59, Mach factor: 2.06
+Default processor set: 333 tasks, 1712 threads, 4 processors
+Load average: 2.10, Mach factor: 2.00
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -59,81 +59,81 @@ PATH: /Applications/Wine Stable.app/Contents/Resources/wine/bin
 ## Core tests. ##
 ## ----------- ##
 
-configure:1303: checking for a BSD-compatible install
-configure:1357: result: /usr/local/bin/ginstall -c
-configure:1368: checking whether build environment is sane
-configure:1411: result: yes
-configure:1436: WARNING: `missing' script is too old or missing
-configure:1444: checking for gawk
-configure:1473: result: no
-configure:1444: checking for mawk
-configure:1473: result: no
-configure:1444: checking for nawk
-configure:1473: result: no
-configure:1444: checking for awk
-configure:1460: found /usr/bin/awk
-configure:1470: result: awk
-configure:1480: checking whether make sets $(MAKE)
-configure:1500: result: yes
-configure:1702: checking for gcc
-configure:1718: found /usr/bin/gcc
-configure:1728: result: gcc
-configure:1972: checking for C compiler version
-configure:1975: gcc --version </dev/null >&5
+configure:1305: checking for a BSD-compatible install
+configure:1359: result: /usr/local/bin/ginstall -c
+configure:1370: checking whether build environment is sane
+configure:1413: result: yes
+configure:1438: WARNING: `missing' script is too old or missing
+configure:1446: checking for gawk
+configure:1475: result: no
+configure:1446: checking for mawk
+configure:1475: result: no
+configure:1446: checking for nawk
+configure:1475: result: no
+configure:1446: checking for awk
+configure:1462: found /usr/bin/awk
+configure:1472: result: awk
+configure:1482: checking whether make sets $(MAKE)
+configure:1502: result: yes
+configure:1704: checking for gcc
+configure:1720: found /usr/bin/gcc
+configure:1730: result: gcc
+configure:1974: checking for C compiler version
+configure:1977: gcc --version </dev/null >&5
 Configured with: --prefix=/Applications/Xcode.app/Contents/Developer/usr --with-gxx-include-dir=/usr/include/c++/4.2.1
 Apple LLVM version 9.1.0 (clang-902.0.39.2)
 Target: x86_64-apple-darwin17.7.0
 Thread model: posix
 InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
-configure:1978: $? = 0
-configure:1980: gcc -v </dev/null >&5
+configure:1980: $? = 0
+configure:1982: gcc -v </dev/null >&5
 Configured with: --prefix=/Applications/Xcode.app/Contents/Developer/usr --with-gxx-include-dir=/usr/include/c++/4.2.1
 Apple LLVM version 9.1.0 (clang-902.0.39.2)
 Target: x86_64-apple-darwin17.7.0
 Thread model: posix
 InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
-configure:1983: $? = 0
-configure:1985: gcc -V </dev/null >&5
+configure:1985: $? = 0
+configure:1987: gcc -V </dev/null >&5
 clang: error: argument to '-V' is missing (expected 1 value)
 clang: error: no input files
-configure:1988: $? = 1
-configure:2012: checking for C compiler default output
-configure:2015: gcc    conftest.c  >&5
-configure:2018: $? = 0
-configure:2064: result: a.out
-configure:2069: checking whether the C compiler works
-configure:2075: ./a.out
-configure:2078: $? = 0
-configure:2095: result: yes
-configure:2102: checking whether we are cross compiling
-configure:2104: result: no
-configure:2107: checking for suffix of executables
-configure:2109: gcc -o conftest    conftest.c  >&5
-configure:2112: $? = 0
-configure:2137: result: 
-configure:2143: checking for suffix of object files
-configure:2165: gcc -c   conftest.c >&5
-configure:2168: $? = 0
-configure:2190: result: o
-configure:2194: checking whether we are using the GNU C compiler
-configure:2219: gcc -c   conftest.c >&5
-configure:2222: $? = 0
-configure:2225: test -s conftest.o
-configure:2228: $? = 0
-configure:2241: result: yes
-configure:2247: checking whether gcc accepts -g
-configure:2269: gcc -c -g  conftest.c >&5
-configure:2272: $? = 0
-configure:2275: test -s conftest.o
-configure:2278: $? = 0
-configure:2289: result: yes
-configure:2306: checking for gcc option to accept ANSI C
-configure:2367: gcc  -c -g -O2 -w  conftest.c >&5
-configure:2370: $? = 0
-configure:2373: test -s conftest.o
-configure:2376: $? = 0
-configure:2394: result: none needed
-configure:2412: gcc -c -g -O2 -w  conftest.c >&5
+configure:1990: $? = 1
+configure:2014: checking for C compiler default output
+configure:2017: gcc  -D_FORTIFY_SOURCE=1 -Wno-comment   conftest.c  >&5
+configure:2020: $? = 0
+configure:2066: result: a.out
+configure:2071: checking whether the C compiler works
+configure:2077: ./a.out
+configure:2080: $? = 0
+configure:2097: result: yes
+configure:2104: checking whether we are cross compiling
+configure:2106: result: no
+configure:2109: checking for suffix of executables
+configure:2111: gcc -o conftest  -D_FORTIFY_SOURCE=1 -Wno-comment   conftest.c  >&5
+configure:2114: $? = 0
+configure:2139: result: 
+configure:2145: checking for suffix of object files
+configure:2167: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:2170: $? = 0
+configure:2192: result: o
+configure:2196: checking whether we are using the GNU C compiler
+configure:2221: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:2224: $? = 0
+configure:2227: test -s conftest.o
+configure:2230: $? = 0
+configure:2243: result: yes
+configure:2249: checking whether gcc accepts -g
+configure:2271: gcc -c -g  conftest.c >&5
+configure:2274: $? = 0
+configure:2277: test -s conftest.o
+configure:2280: $? = 0
+configure:2291: result: yes
+configure:2308: checking for gcc option to accept ANSI C
+configure:2369: gcc  -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:2372: $? = 0
+configure:2375: test -s conftest.o
+configure:2378: $? = 0
+configure:2396: result: none needed
+configure:2414: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
 conftest.c:2:3: error: unknown type name 'choke'
   choke me
   ^
@@ -142,28 +142,28 @@ conftest.c:2:11: error: expected ';' after top level declarator
           ^
           ;
 2 errors generated.
-configure:2415: $? = 1
+configure:2417: $? = 1
 configure: failed program was:
 | #ifndef __cplusplus
 |   choke me
 | #endif
-configure:2543: checking for style of include used by make
-configure:2571: result: GNU
-configure:2599: checking dependency style of gcc
-configure:2661: result: gcc3
-configure:2690: checking for a BSD-compatible install
-configure:2744: result: /usr/local/bin/ginstall -c
-configure:2763: checking how to run the C preprocessor
-configure:2799: gcc -E  conftest.c
-configure:2805: $? = 0
-configure:2837: gcc -E  conftest.c
-configure:2838:10: fatal error: 'ac_nonexistent.h' file not found
+configure:2545: checking for style of include used by make
+configure:2573: result: GNU
+configure:2601: checking dependency style of gcc
+configure:2663: result: gcc3
+configure:2692: checking for a BSD-compatible install
+configure:2746: result: /usr/local/bin/ginstall -c
+configure:2765: checking how to run the C preprocessor
+configure:2801: gcc -E  conftest.c
+configure:2807: $? = 0
+configure:2839: gcc -E  conftest.c
+configure:2840:10: fatal error: 'ac_nonexistent.h' file not found
 #include <ac_nonexistent.h>
          ^~~~~~~~~~~~~~~~~~
 1 error generated.
-configure:2843: $? = 1
+configure:2845: $? = 1
 configure: failed program was:
-| #line 2828 "configure"
+| #line 2830 "configure"
 | /* confdefs.h.  */
 | 
 | #define PACKAGE_NAME ""
@@ -175,17 +175,17 @@ configure: failed program was:
 | #define VERSION "0.1"
 | /* end confdefs.h.  */
 | #include <ac_nonexistent.h>
-configure:2881: result: gcc -E
-configure:2906: gcc -E  conftest.c
-configure:2912: $? = 0
-configure:2944: gcc -E  conftest.c
-configure:2945:10: fatal error: 'ac_nonexistent.h' file not found
+configure:2883: result: gcc -E
+configure:2908: gcc -E  conftest.c
+configure:2914: $? = 0
+configure:2946: gcc -E  conftest.c
+configure:2947:10: fatal error: 'ac_nonexistent.h' file not found
 #include <ac_nonexistent.h>
          ^~~~~~~~~~~~~~~~~~
 1 error generated.
-configure:2950: $? = 1
+configure:2952: $? = 1
 configure: failed program was:
-| #line 2935 "configure"
+| #line 2937 "configure"
 | /* confdefs.h.  */
 | 
 | #define PACKAGE_NAME ""
@@ -197,175 +197,190 @@ configure: failed program was:
 | #define VERSION "0.1"
 | /* end confdefs.h.  */
 | #include <ac_nonexistent.h>
-configure:2993: checking for egrep
-configure:3003: result: grep -E
-configure:3008: checking for ANSI C header files
-configure:3034: gcc -c -g -O2 -w  conftest.c >&5
-configure:3037: $? = 0
-configure:3040: test -s conftest.o
-configure:3043: $? = 0
-configure:3135: gcc -o conftest -g -O2 -w   conftest.c  >&5
-configure:3138: $? = 0
-configure:3140: ./conftest
-configure:3143: $? = 0
-configure:3158: result: yes
-configure:3182: checking for sys/types.h
-configure:3199: gcc -c -g -O2 -w  conftest.c >&5
-configure:3202: $? = 0
-configure:3205: test -s conftest.o
-configure:3208: $? = 0
-configure:3219: result: yes
-configure:3182: checking for sys/stat.h
-configure:3199: gcc -c -g -O2 -w  conftest.c >&5
-configure:3202: $? = 0
-configure:3205: test -s conftest.o
-configure:3208: $? = 0
-configure:3219: result: yes
-configure:3182: checking for stdlib.h
-configure:3199: gcc -c -g -O2 -w  conftest.c >&5
-configure:3202: $? = 0
-configure:3205: test -s conftest.o
-configure:3208: $? = 0
-configure:3219: result: yes
-configure:3182: checking for string.h
-configure:3199: gcc -c -g -O2 -w  conftest.c >&5
-configure:3202: $? = 0
-configure:3205: test -s conftest.o
-configure:3208: $? = 0
-configure:3219: result: yes
-configure:3182: checking for memory.h
-configure:3199: gcc -c -g -O2 -w  conftest.c >&5
-configure:3202: $? = 0
-configure:3205: test -s conftest.o
-configure:3208: $? = 0
-configure:3219: result: yes
-configure:3182: checking for strings.h
-configure:3199: gcc -c -g -O2 -w  conftest.c >&5
-configure:3202: $? = 0
-configure:3205: test -s conftest.o
-configure:3208: $? = 0
-configure:3219: result: yes
-configure:3182: checking for inttypes.h
-configure:3199: gcc -c -g -O2 -w  conftest.c >&5
-configure:3202: $? = 0
-configure:3205: test -s conftest.o
-configure:3208: $? = 0
-configure:3219: result: yes
-configure:3182: checking for stdint.h
-configure:3199: gcc -c -g -O2 -w  conftest.c >&5
-configure:3202: $? = 0
-configure:3205: test -s conftest.o
-configure:3208: $? = 0
-configure:3219: result: yes
-configure:3182: checking for unistd.h
-configure:3199: gcc -c -g -O2 -w  conftest.c >&5
-configure:3202: $? = 0
-configure:3205: test -s conftest.o
-configure:3208: $? = 0
-configure:3219: result: yes
-configure:3254: checking for unistd.h
-configure:3259: result: yes
-configure:3263: checking errno.h usability
-configure:3276: gcc -c -g -O2 -w  conftest.c >&5
-configure:3279: $? = 0
-configure:3282: test -s conftest.o
-configure:3285: $? = 0
-configure:3295: result: yes
-configure:3299: checking errno.h presence
-configure:3310: gcc -E  conftest.c
-configure:3316: $? = 0
-configure:3335: result: yes
-configure:3371: checking for errno.h
-configure:3378: result: yes
-configure:3263: checking stdio.h usability
-configure:3276: gcc -c -g -O2 -w  conftest.c >&5
-configure:3279: $? = 0
-configure:3282: test -s conftest.o
-configure:3285: $? = 0
-configure:3295: result: yes
-configure:3299: checking stdio.h presence
-configure:3310: gcc -E  conftest.c
-configure:3316: $? = 0
-configure:3335: result: yes
-configure:3371: checking for stdio.h
-configure:3378: result: yes
-configure:3254: checking for stdlib.h
-configure:3259: result: yes
-configure:3254: checking for sys/types.h
-configure:3259: result: yes
-configure:3263: checking netinet/in.h usability
-configure:3276: gcc -c -g -O2 -w  conftest.c >&5
-configure:3279: $? = 0
-configure:3282: test -s conftest.o
-configure:3285: $? = 0
-configure:3295: result: yes
-configure:3299: checking netinet/in.h presence
-configure:3310: gcc -E  conftest.c
-configure:3316: $? = 0
-configure:3335: result: yes
-configure:3371: checking for netinet/in.h
-configure:3378: result: yes
-configure:3263: checking netinet/ip.h usability
-configure:3276: gcc -c -g -O2 -w  conftest.c >&5
-configure:3279: $? = 0
-configure:3282: test -s conftest.o
-configure:3285: $? = 0
-configure:3295: result: yes
-configure:3299: checking netinet/ip.h presence
-configure:3310: gcc -E  conftest.c
-configure:3316: $? = 0
-configure:3335: result: yes
-configure:3371: checking for netinet/ip.h
-configure:3378: result: yes
-configure:3263: checking netinet/tcp.h usability
-configure:3276: gcc -c -g -O2 -w  conftest.c >&5
-configure:3279: $? = 0
-configure:3282: test -s conftest.o
-configure:3285: $? = 0
-configure:3295: result: yes
-configure:3299: checking netinet/tcp.h presence
-configure:3310: gcc -E  conftest.c
-configure:3316: $? = 0
-configure:3335: result: yes
-configure:3371: checking for netinet/tcp.h
-configure:3378: result: yes
-configure:3263: checking pcap.h usability
-configure:3276: gcc -c -g -O2 -w  conftest.c >&5
-configure:3279: $? = 0
-configure:3282: test -s conftest.o
-configure:3285: $? = 0
-configure:3295: result: yes
-configure:3299: checking pcap.h presence
-configure:3310: gcc -E  conftest.c
-configure:3316: $? = 0
-configure:3335: result: yes
-configure:3371: checking for pcap.h
-configure:3378: result: yes
-configure:3263: checking signal.h usability
-configure:3276: gcc -c -g -O2 -w  conftest.c >&5
-configure:3279: $? = 0
-configure:3282: test -s conftest.o
-configure:3285: $? = 0
-configure:3295: result: yes
-configure:3299: checking signal.h presence
-configure:3310: gcc -E  conftest.c
-configure:3316: $? = 0
-configure:3335: result: yes
-configure:3371: checking for signal.h
-configure:3378: result: yes
-configure:3399: checking for strcpy
-configure:3449: gcc -o conftest -g -O2 -w   conftest.c  >&5
-configure:3452: $? = 0
-configure:3455: test -s conftest
-configure:3458: $? = 0
-configure:3469: result: yes
-configure:3399: checking for strtok
-configure:3449: gcc -o conftest -g -O2 -w   conftest.c  >&5
-configure:3452: $? = 0
-configure:3455: test -s conftest
-configure:3458: $? = 0
-configure:3469: result: yes
-configure:3621: creating ./config.status
+configure:2995: checking for egrep
+configure:3005: result: grep -E
+configure:3010: checking for ANSI C header files
+configure:3036: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3039: $? = 0
+configure:3042: test -s conftest.o
+configure:3045: $? = 0
+configure:3137: gcc -o conftest  -D_FORTIFY_SOURCE=1 -Wno-comment   conftest.c  >&5
+configure:3132:7: warning: implicitly declaring library function 'exit' with type 'void (int) __attribute__((noreturn))' [-Wimplicit-function-declaration]
+      exit(2);
+      ^
+configure:3132:7: note: include the header <stdlib.h> or explicitly provide a declaration for 'exit'
+1 warning generated.
+configure:3140: $? = 0
+configure:3142: ./conftest
+configure:3145: $? = 0
+configure:3160: result: yes
+configure:3184: checking for sys/types.h
+configure:3201: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3204: $? = 0
+configure:3207: test -s conftest.o
+configure:3210: $? = 0
+configure:3221: result: yes
+configure:3184: checking for sys/stat.h
+configure:3201: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3204: $? = 0
+configure:3207: test -s conftest.o
+configure:3210: $? = 0
+configure:3221: result: yes
+configure:3184: checking for stdlib.h
+configure:3201: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3204: $? = 0
+configure:3207: test -s conftest.o
+configure:3210: $? = 0
+configure:3221: result: yes
+configure:3184: checking for string.h
+configure:3201: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3204: $? = 0
+configure:3207: test -s conftest.o
+configure:3210: $? = 0
+configure:3221: result: yes
+configure:3184: checking for memory.h
+configure:3201: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3204: $? = 0
+configure:3207: test -s conftest.o
+configure:3210: $? = 0
+configure:3221: result: yes
+configure:3184: checking for strings.h
+configure:3201: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3204: $? = 0
+configure:3207: test -s conftest.o
+configure:3210: $? = 0
+configure:3221: result: yes
+configure:3184: checking for inttypes.h
+configure:3201: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3204: $? = 0
+configure:3207: test -s conftest.o
+configure:3210: $? = 0
+configure:3221: result: yes
+configure:3184: checking for stdint.h
+configure:3201: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3204: $? = 0
+configure:3207: test -s conftest.o
+configure:3210: $? = 0
+configure:3221: result: yes
+configure:3184: checking for unistd.h
+configure:3201: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3204: $? = 0
+configure:3207: test -s conftest.o
+configure:3210: $? = 0
+configure:3221: result: yes
+configure:3256: checking for unistd.h
+configure:3261: result: yes
+configure:3265: checking errno.h usability
+configure:3278: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3281: $? = 0
+configure:3284: test -s conftest.o
+configure:3287: $? = 0
+configure:3297: result: yes
+configure:3301: checking errno.h presence
+configure:3312: gcc -E  conftest.c
+configure:3318: $? = 0
+configure:3337: result: yes
+configure:3373: checking for errno.h
+configure:3380: result: yes
+configure:3265: checking stdio.h usability
+configure:3278: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3281: $? = 0
+configure:3284: test -s conftest.o
+configure:3287: $? = 0
+configure:3297: result: yes
+configure:3301: checking stdio.h presence
+configure:3312: gcc -E  conftest.c
+configure:3318: $? = 0
+configure:3337: result: yes
+configure:3373: checking for stdio.h
+configure:3380: result: yes
+configure:3256: checking for stdlib.h
+configure:3261: result: yes
+configure:3256: checking for sys/types.h
+configure:3261: result: yes
+configure:3265: checking netinet/in.h usability
+configure:3278: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3281: $? = 0
+configure:3284: test -s conftest.o
+configure:3287: $? = 0
+configure:3297: result: yes
+configure:3301: checking netinet/in.h presence
+configure:3312: gcc -E  conftest.c
+configure:3318: $? = 0
+configure:3337: result: yes
+configure:3373: checking for netinet/in.h
+configure:3380: result: yes
+configure:3265: checking netinet/ip.h usability
+configure:3278: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3281: $? = 0
+configure:3284: test -s conftest.o
+configure:3287: $? = 0
+configure:3297: result: yes
+configure:3301: checking netinet/ip.h presence
+configure:3312: gcc -E  conftest.c
+configure:3318: $? = 0
+configure:3337: result: yes
+configure:3373: checking for netinet/ip.h
+configure:3380: result: yes
+configure:3265: checking netinet/tcp.h usability
+configure:3278: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3281: $? = 0
+configure:3284: test -s conftest.o
+configure:3287: $? = 0
+configure:3297: result: yes
+configure:3301: checking netinet/tcp.h presence
+configure:3312: gcc -E  conftest.c
+configure:3318: $? = 0
+configure:3337: result: yes
+configure:3373: checking for netinet/tcp.h
+configure:3380: result: yes
+configure:3265: checking pcap.h usability
+configure:3278: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3281: $? = 0
+configure:3284: test -s conftest.o
+configure:3287: $? = 0
+configure:3297: result: yes
+configure:3301: checking pcap.h presence
+configure:3312: gcc -E  conftest.c
+configure:3318: $? = 0
+configure:3337: result: yes
+configure:3373: checking for pcap.h
+configure:3380: result: yes
+configure:3265: checking signal.h usability
+configure:3278: gcc -c  -D_FORTIFY_SOURCE=1 -Wno-comment  conftest.c >&5
+configure:3281: $? = 0
+configure:3284: test -s conftest.o
+configure:3287: $? = 0
+configure:3297: result: yes
+configure:3301: checking signal.h presence
+configure:3312: gcc -E  conftest.c
+configure:3318: $? = 0
+configure:3337: result: yes
+configure:3373: checking for signal.h
+configure:3380: result: yes
+configure:3401: checking for strcpy
+configure:3451: gcc -o conftest  -D_FORTIFY_SOURCE=1 -Wno-comment   conftest.c  >&5
+configure:3452:6: warning: incompatible redeclaration of library function 'strcpy' [-Wincompatible-library-redeclaration]
+char strcpy ();
+     ^
+configure:3452:6: note: 'strcpy' is a builtin with type 'char *(char *, const char *)'
+1 warning generated.
+configure:3454: $? = 0
+configure:3457: test -s conftest
+configure:3460: $? = 0
+configure:3471: result: yes
+configure:3401: checking for strtok
+configure:3451: gcc -o conftest  -D_FORTIFY_SOURCE=1 -Wno-comment   conftest.c  >&5
+configure:3453:6: warning: incompatible redeclaration of library function 'strtok' [-Wincompatible-library-redeclaration]
+char strtok ();
+     ^
+configure:3453:6: note: 'strtok' is a builtin with type 'char *(char *, const char *)'
+1 warning generated.
+configure:3454: $? = 0
+configure:3457: test -s conftest
+configure:3460: $? = 0
+configure:3471: result: yes
+configure:3623: creating ./config.status
 
 ## ---------------------- ##
 ## Running config.status. ##
@@ -452,7 +467,7 @@ AUTOMAKE='automake-1.7'
 AWK='awk'
 CC='gcc'
 CCDEPMODE='depmode=gcc3'
-CFLAGS='-g -O2 -w'
+CFLAGS=' -D_FORTIFY_SOURCE=1 -Wno-comment'
 CPP='gcc -E'
 CPPFLAGS=''
 CYGPATH_W='echo'

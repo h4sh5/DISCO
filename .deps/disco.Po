@@ -81,7 +81,7 @@ disco.o: disco.c /usr/include/stdio.h /usr/include/_stdio.h \
   /usr/include/pcap/pcap.h /usr/include/pcap/export-defs.h \
   /usr/include/sys/time.h /usr/include/sys/_types/_timeval64.h \
   /usr/include/time.h /usr/include/pcap/bpf.h /usr/include/pcap/dlt.h \
-  /usr/include/signal.h
+  /usr/include/signal.h /usr/include/execinfo.h
 
 /usr/include/stdio.h:
 
@@ -368,3 +368,5 @@ disco.h:
 /usr/include/pcap/dlt.h:
 
 /usr/include/signal.h:
+
+/usr/include/execinfo.h:
